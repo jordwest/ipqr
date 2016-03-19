@@ -14,6 +14,11 @@ $ go get github.com/jordwest/ipqr
 $ ipqr
 ```
 
+## Binaries
+
+If you don't have go and you'd rather just download a binary, grab them from the [Releases page](https://github.com/jordwest/ipqr/releases/). There are builds for Mac, Windows and Linux (including ARM/ARM64 for the Raspberry Pi) although it hasn't been tested on those platforms.
+Place the binary somewhere on your PATH - for example `/usr/local/bin/` on a Mac/Linux system.
+
 ## Usage
 
 #### If your terminal has a dark background
