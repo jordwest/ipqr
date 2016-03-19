@@ -43,16 +43,6 @@ func printOption(o Option) {
 func main() {
 	flag.Parse()
 
-	options, err := DetectOptions()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if list {
-		printList(options)
-		return
-	}
-
 	if len(host) > 0 {
 		url := MakeURL(protocol, host, port, path)
 		err := PrintQRCode(url)
@@ -60,6 +50,16 @@ func main() {
 			log.Fatalf("Error: %s", err)
 		}
 		fmt.Printf("%s\n", url)
+		return
+	}
+
+	options, err := DetectOptions()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if list {
+		printList(options)
 		return
 	}
 
