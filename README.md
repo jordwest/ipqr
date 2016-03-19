@@ -16,8 +16,14 @@ $ ipqr
 
 ## Usage
 
+#### If your terminal has a dark background
 ```bash
 $ ipqr
+```
+
+#### If your terminal has a light background
+```bash
+$ ipqr -i
 ```
 
 That's it.
