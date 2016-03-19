@@ -4,6 +4,8 @@
 
 This makes it easy to test a local site on mobile -- because typing IP addresses on mobile sucks
 
+![ipqr demo](/../screenshots/basic_usage.png?raw=true "ipqr Demo")
+
 ## Installation
 To get started, make sure you have [go](https://golang.org/) installed, then:
 
