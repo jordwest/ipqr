@@ -2,77 +2,80 @@ package main
 
 import (
 	"fmt"
-	"github.com/boombuler/barcode/qr"
+	flag "github.com/spf13/pflag"
 	"log"
-	"net"
 )
 
-func white(times int) {
-	for i := 0; i < times; i++ {
-		fmt.Printf("\x1b[7m \x1b[0m")
-	}
+var invert bool
+var list bool
+var selectedInterface int
+var port int
+var protocol string
+var host string
+var path string
+
+func init() {
+	flag.BoolVarP(&invert, "invert", "i", false, "Use if your terminal has a light background")
+	flag.BoolVarP(&list, "list", "l", false, "Show a complete list of detected network addresses. By default we'll try to auto detect")
+	flag.IntVarP(&selectedInterface, "interface", "n", -1, "The number of the interface to display. Use --list to find the interface number")
+	flag.IntVarP(&port, "port", "p", -1, "The port number to append to the end of the host, if any")
+	flag.StringVarP(&protocol, "protocol", "r", "http", "The protocol to prepend")
+	flag.StringVarP(&host, "host", "h", "", "Override host. This will default to the autodetected IP of this device")
+	flag.StringVarP(&path, "path", "a", "", "Specify a path at the end of the URL")
 }
-func black(times int) {
-	for i := 0; i < times; i++ {
-		fmt.Printf(" ")
+
+func printList(options []Option) {
+	for i, option := range options {
+		fmt.Printf("%d: %s %s\n", i, option.iface, option.ip.String())
 	}
 }
 
-func printQRCode(data string) {
-	qrcode, err := qr.Encode(data, qr.Q, qr.Auto)
+func printOption(o Option) {
+	url := o.MakeURL(protocol, port, path)
+	err := PrintQRCode(url)
 	if err != nil {
-		log.Fatalf("Error generating QR code %s\n", err)
+		log.Fatalf("Error: %s", err)
 	}
 
-	border := 1
-	charWidth := 2
-
-	rect := qrcode.Bounds()
-	fmt.Printf("%dx%d\n", rect.Dx(), rect.Dy())
-	white(charWidth * (rect.Dx() + border*2))
-	fmt.Printf("\n")
-	for y := 0; y < rect.Dy(); y++ {
-		white(charWidth * border)
-		for x := 0; x < rect.Dx(); x++ {
-
-			color := qrcode.At(x, y)
-			r, _, _, _ := color.RGBA()
-			if r > 128 {
-				white(charWidth)
-			} else {
-				black(charWidth)
-			}
-		}
-		white(charWidth * border)
-		fmt.Printf("\n")
-	}
-	white(charWidth * (rect.Dx() + border*2))
-	fmt.Printf("\n")
-
+	fmt.Printf("%s: %s ==> %s\n", o.iface, o.ip.String(), url)
 }
 
 func main() {
-	ifaces, err := net.Interfaces()
+	flag.Parse()
+
+	options, err := DetectOptions()
 	if err != nil {
-		log.Fatalf("Error querying interfaces: %s", err)
+		log.Fatal(err)
 	}
-	for _, i := range ifaces {
-		addrs, err := i.Addrs()
+
+	if list {
+		printList(options)
+		return
+	}
+
+	if len(host) > 0 {
+		url := MakeURL(protocol, host, port, path)
+		err := PrintQRCode(url)
 		if err != nil {
-			log.Printf("Error querying interface addresses: %s", err)
+			log.Fatalf("Error: %s", err)
 		}
-		for _, addr := range addrs {
-			var ip net.IP
-			switch v := addr.(type) {
-			case *net.IPNet:
-				ip = v.IP
-			case *net.IPAddr:
-				ip = v.IP
-			}
-			if ip.IsGlobalUnicast() {
-				printQRCode(fmt.Sprintf("http://%s:1313", ip))
-				fmt.Printf("%s: %s\n", i.Name, ip)
-			}
-		}
+		fmt.Printf("%s\n", url)
+		return
 	}
+
+	if selectedInterface != -1 {
+		option, err := options.Get(selectedInterface)
+		if err != nil {
+			log.Fatalf("Error: %s", err)
+		}
+		printOption(option)
+		return
+	}
+
+	// Autodetect
+	option, err := options.Autodetect()
+	if err != nil {
+		fmt.Printf("Could not autodetect an interface. Try re-running with the --list flag.")
+	}
+	printOption(option)
 }
