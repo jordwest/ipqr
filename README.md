@@ -28,7 +28,7 @@ Download the latest `linux_*.tar.gz` package from the [Releases page](https://gi
 
 For x86/x86_64 processors, use `linux_386.tar.gz` or `linux_amd64.tar.gz`.
 
-For Raspberry Pi 1 and 2, use `linux_arm.tar.gz`. For Raspberry Pi 3, use `linux_arm64.tar.gz`.
+For Raspberry Pi, use `linux_arm.tar.gz`. Note that although a 64-bit binary is available, the default OS on the Raspberry Pi 3 (which has a 64-bit processor) is still 32-bit.
 
 ## Installation from source
 To get started, make sure you have [go](https://golang.org/) installed, then:
