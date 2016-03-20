@@ -104,3 +104,11 @@ $ ipqr --host google.com --path /search?q=github+ipqr
 ```
 http://google.com/search?q=github+ipqr
 ```
+
+## Credits
+
+This tool makes use of some great open source projects:
+
+ - [boombuler/barcode](//github.com/boombuler/barcode) for QR code generation
+ - [shiena/ansicolor](//github.com/shiena/ansicolor) for terminal colour support on Windows
+ - [spf13/pflag](//github.com/spf13/pflag) for POSIX standard command line flags
