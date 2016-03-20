@@ -61,6 +61,7 @@ Usage of ipqr:
   -a, --path string       Specify a path at the end of the URL
   -p, --port int          The port number to append to the end of the host, if any (default -1)
   -r, --protocol string   The protocol to prepend (default "http")
+  -v, --version           Show the version number and exit
 ```
 
 #### Use a specific port and path
