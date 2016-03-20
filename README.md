@@ -6,18 +6,37 @@ This makes it easy to test a local site on mobile -- because typing IP addresses
 
 ![ipqr demo](/../screenshots/basic_usage.png?raw=true "ipqr Demo")
 
-## Installation
+## Download
+
+### Mac
+
+Using homebrew:
+
+```bash
+brew install jordwest/tools/ipqr
+```
+
+Alternatively, download the latest `darwin_amd64.tar.gz` package from the [Releases page](https://github.com/jordwest/ipqr/releases/)
+
+### Windows
+
+Download the latest `windows_amd64.zip` or `windows_386.zip` from the [Releases page](https://github.com/jordwest/ipqr/releases/).
+
+### Linux (including Raspberry Pi!)
+
+Download the latest `linux_*.tar.gz` package from the [Releases page](https://github.com/jordwest/ipqr/releases/).
+
+For x86/x86_64 processors, use `linux_386.tar.gz` or `linux_amd64.tar.gz`.
+
+For Raspberry Pi 1 and 2, use `linux_arm.tar.gz`. For Raspberry Pi 3, use `linux_arm64.tar.gz`.
+
+## Installation from source
 To get started, make sure you have [go](https://golang.org/) installed, then:
 
 ```bash
 $ go get github.com/jordwest/ipqr
 $ ipqr
 ```
-
-## Binaries
-
-If you don't have go and you'd rather just download a binary, grab them from the [Releases page](https://github.com/jordwest/ipqr/releases/). There are builds for Mac, Windows and Linux (including ARM/ARM64 for the Raspberry Pi) although it hasn't been tested on those platforms.
-Place the binary somewhere on your PATH - for example `/usr/local/bin/` on a Mac/Linux system.
 
 ## Usage
 
