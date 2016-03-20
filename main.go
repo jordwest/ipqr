@@ -6,6 +6,9 @@ import (
 	"log"
 )
 
+const VERSION = "1.1.0"
+
+var version bool
 var list bool
 var selectedInterface int
 var port int
@@ -14,6 +17,7 @@ var host string
 var path string
 
 func init() {
+	flag.BoolVarP(&version, "version", "v", false, "Show the version number and exit")
 	flag.BoolVarP(&list, "list", "l", false, "Show a complete list of detected network addresses. By default we'll try to auto detect")
 	flag.IntVarP(&selectedInterface, "interface", "n", -1, "The number of the interface to display. Use --list to find the interface number")
 	flag.IntVarP(&port, "port", "p", -1, "The port number to append to the end of the host, if any")
@@ -40,6 +44,11 @@ func printOption(o Option) {
 
 func main() {
 	flag.Parse()
+
+	if version {
+		fmt.Printf("%s\n", VERSION)
+		return
+	}
 
 	if len(host) > 0 {
 		url := MakeURL(protocol, host, port, path)
