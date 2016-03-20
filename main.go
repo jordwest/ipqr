@@ -6,7 +6,6 @@ import (
 	"log"
 )
 
-var invert bool
 var list bool
 var selectedInterface int
 var port int
@@ -15,7 +14,6 @@ var host string
 var path string
 
 func init() {
-	flag.BoolVarP(&invert, "invert", "i", false, "Use if your terminal has a light background")
 	flag.BoolVarP(&list, "list", "l", false, "Show a complete list of detected network addresses. By default we'll try to auto detect")
 	flag.IntVarP(&selectedInterface, "interface", "n", -1, "The number of the interface to display. Use --list to find the interface number")
 	flag.IntVarP(&port, "port", "p", -1, "The port number to append to the end of the host, if any")

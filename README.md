@@ -16,14 +16,8 @@ $ ipqr
 
 ## Usage
 
-#### If your terminal has a dark background
 ```bash
 $ ipqr
-```
-
-#### If your terminal has a light background
-```bash
-$ ipqr -i
 ```
 
 That's it.
@@ -39,7 +33,6 @@ $ ipqr --help
 Usage of ipqr:
   -h, --host string       Override host. This will default to the autodetected IP of this device
   -n, --interface int     The number of the interface to display. Use --list to find the interface number (default -1)
-  -i, --invert            Use if your terminal has a light background
   -l, --list              Show a complete list of detected network addresses. By default we'll try to auto detect
   -a, --path string       Specify a path at the end of the URL
   -p, --port int          The port number to append to the end of the host, if any (default -1)

@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/boombuler/barcode/qr"
+	"github.com/shiena/ansicolor"
+	"io"
 	"net"
+	"os"
 )
 
 type Option struct {
@@ -12,21 +15,28 @@ type Option struct {
 }
 type Options []Option
 
+var ansiWriter io.Writer
+
+func init() {
+	// For Windows support
+	ansiWriter = ansicolor.NewAnsiColorWriter(os.Stdout)
+}
+
 func pixel(times int, white bool) {
 	for i := 0; i < times; i++ {
 		if white {
-			fmt.Printf("\x1b[7m \x1b[0m")
+			fmt.Fprintf(ansiWriter, "\x1b[47m \x1b[0m")
 		} else {
-			fmt.Printf(" ")
+			fmt.Fprintf(ansiWriter, "\x1b[40m \x1b[0m")
 		}
 	}
 }
 
 func white(times int) {
-	pixel(times, !invert)
+	pixel(times, true)
 }
 func black(times int) {
-	pixel(times, invert)
+	pixel(times, false)
 }
 
 // Autodetect returns the first global unicast address, or an error if none was found
