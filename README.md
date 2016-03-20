@@ -94,3 +94,13 @@ $ ipqr -n 1
 ```
 lo0: 127.0.0.1 ==> http://127.0.0.1
 ```
+
+#### Customize the host (skips IP detection)
+
+```bash
+$ ipqr --host google.com --path /search?q=github+ipqr
+```
+
+```
+http://google.com/search?q=github+ipqr
+```
